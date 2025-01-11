@@ -29,7 +29,6 @@ class Message_Client_App(App):
         return self.body
     def on_start(self):
         for screen_name, screen_view in route_view.items():
-            # print(screen_name, screen_view)
             self.body.add_widget(screen_view)
 
 
