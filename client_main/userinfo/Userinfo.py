@@ -1,5 +1,7 @@
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
-from utils.uix import U_button, U_clear_color_Button,U_label,U_input_text
+from pandas.core.interchange.from_dataframe import primitive_column_to_ndarray
+from utils.uix import U_button, U_clear_color_Button,U_label,U_input_text,Get_Route_View
+import requests
 from kivy.uix.button import Button
 from kivy.metrics import sp
 from kivy.utils import get_color_from_hex
@@ -33,18 +35,26 @@ class LoginScreen(Screen):
 
         self.add_widget(Button(text="登入", size_hint=(.6, .075), pos_hint={"center_x": .5, "top":.45},font_size="31sp", bold=True,
                                color=get_color_from_hex("#d3bc8e")
-                               ,background_normal="static/button.png",background_down="static/button1.png"
+                               ,background_normal="static/button.png",background_down="static/button1.png", on_press=self.login
                                ))
         self.add_widget(self.title)
         self.add_widget(self.input_user)
         self.add_widget(self.input_password)
+    def login(self, widget):
+        username = self.input_user.text
+        password = self.input_password.text
+
+        login_message = requests.post("http://127.0.0.1:9020/login", data={"username": username, "password": password})
+        print(login_message.text)
 
 
 
 
+
+@Get_Route_View(name)
 class View(Screen):
     def __init__(self, **kwargs):
-        super(View, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.name = name
         self.add_widget(U_clear_color_Button(text="用户登入", font_size=sp(20), size_hint=(.5,.075), pos_hint={"top":1,"left":1}, pos_box="left"))
         self.add_widget(U_clear_color_Button(text="用户注册", font_size=sp(20), size_hint=(.5,.075),pos_hint={"top":1,"right":1}, pos_box="right"))

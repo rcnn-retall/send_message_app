@@ -4,18 +4,11 @@ Config.set("graphics","height", 773)
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, NoTransition
 from kivy.core.text import LabelBase
-from index import Index_veiw
 from userinfo import Userinfo
+from index import Index_veiw
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
-
-
-route_view = {
-    Index_veiw.name : Index_veiw.View(),
-    Userinfo.name : Userinfo.View(),
-              }
-
-
+from utils.uix import route_view
 
 LabelBase.register("Roboto", fn_regular="font/msyh.ttc", fn_bold="font/msyhbd.ttc")
 
@@ -29,10 +22,9 @@ class Message_Client_App(App):
         return self.body
     def on_start(self):
         for screen_name, screen_view in route_view.items():
-            self.body.add_widget(screen_view)
+            print(screen_name, screen_view)
+            self.body.add_widget(screen_view())
 
-
-        self.body.current = Userinfo.name
 
 
 Main = Message_Client_App()

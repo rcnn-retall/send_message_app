@@ -5,6 +5,18 @@ from kivy.graphics import Rectangle, Color, BoxShadow
 from kivy.uix.textinput import TextInput
 from kivy.metrics import dp
 
+route_view = {}
+
+
+def Get_Route_View(name):
+    def get_route_view(cls):
+        route_view[name] = cls
+        def Route_view(cls):
+            return cls
+
+        return Route_view
+    return get_route_view
+
 
 class U_input_text(TextInput):
     def __init__(self,**kwargs):
