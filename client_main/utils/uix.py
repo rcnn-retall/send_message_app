@@ -55,6 +55,13 @@ class U_button(Button, U_wiget):
         for key, value in kwargs.items():
             self.__setattr__(key, value)
 
+class u_but_bg(U_button):
+    def __init__(self,**kwargs):
+        super(u_but_bg, self).__init__()
+        self.background_color = (1,1,1,0)
+        for key, value in kwargs.items():
+            self.__setattr__(key,value)
+
 class U_clear_color_Button(Button, U_wiget):
     def __init__(self,**kwargs):
         super(U_clear_color_Button, self).__init__()

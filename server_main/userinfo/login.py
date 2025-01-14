@@ -26,7 +26,8 @@ class Login_View(object):
             password = exec_message[-1]
             if username == data['username'] and password == data['password']:
                 # key用户名， vlaue 验证字符串
-                auth_str = base64.b32encode((str(time.time())+username).encode("utf-8")).decode("utf-8")
+                auth_str = base64.b32encode((str(time.time())+"info"+username).encode("utf-8")).decode("utf-8")
+
                 r_connect.setex(username, 10080, auth_str)
 
 
@@ -34,7 +35,7 @@ class Login_View(object):
                 response_i = response(str_i.encode())
 
 
-                # print(r_connect.get(username))
+
 
             else:
                 str_i = json.dumps({"userauth": "密码错误"})

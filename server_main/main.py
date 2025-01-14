@@ -5,6 +5,8 @@ from utils.response import response,eooer_response
 import json
 import threading
 from utils.data import Data_exec
+from userinfo import userinfo
+
 with Data_exec() as cursor:
     cursor.execute("CREATE TABLE IF NOT EXISTS UserInfo(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, username CHAR(20) NOT NULL, password CHAR(20) NOT NULL)")
 
@@ -15,7 +17,7 @@ for view_name, view in route.items():
 
 
 
-# print(route_i)
+print(route_i)
 class Send_Message_Server(socket.socket):
     def __init__(self, family=-1, type=-1, proto=-1, fileno=None, host=None, port=None, count=None):
         super(Send_Message_Server, self).__init__(family=family, type=type, proto=proto, fileno=fileno)

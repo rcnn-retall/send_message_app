@@ -9,6 +9,7 @@ from index import Index_veiw
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from utils.uix import route_view
+from utils.data import connsqlit3
 
 LabelBase.register("Roboto", fn_regular="font/msyh.ttc", fn_bold="font/msyhbd.ttc")
 
@@ -24,6 +25,23 @@ class Message_Client_App(App):
         for screen_name, screen_view in route_view.items():
             print(screen_name, screen_view)
             self.body.add_widget(screen_view())
+        with connsqlit3()as cursor:
+            cursor.execute('select * from login_auth where id=1')
+            userauth = cursor.fetchall()
+
+
+        if userauth==[]:
+            self.body.current = Userinfo.name
+        else:
+            self.body.userauth = userauth[0][1]
+            self.body.username = userauth[0][2]
+            self.body.current = Index_veiw.name
+
+
+            print(self.body.username)
+            print(self.body.userauth)
+
+
 
 
 

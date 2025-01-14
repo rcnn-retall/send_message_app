@@ -3,6 +3,7 @@ from pandas.core.interchange.from_dataframe import primitive_column_to_ndarray
 from utils.uix import U_button, U_clear_color_Button,U_label,U_input_text,Get_Route_View
 from utils.data import connsqlit3
 from kivy.uix.label import Label
+from utils import config
 import requests
 from kivy.uix.button import Button
 from kivy.metrics import sp
@@ -52,16 +53,25 @@ class LoginScreen(Screen):
         password = self.input_password.text
 
         pua = json.dumps({"username": username, "password": password})
+        try:
+            login_message = requests.post(config.host_url+config.login_route, data=pua)
+            userauth = json.loads(login_message.text)
 
-        login_message = requests.post("http://127.0.0.1:9020/login", data=pua)
-        userauth = json.loads(login_message.text)
+            if login_message.status_code == 200:
+                with connsqlit3() as cursor:
+                    cursor.execute("delete from login_auth")
+                    cursor.execute('insert into login_auth(id, userauth, username) values (1, "%s", "%s")' %(userauth["userauth"], username))
 
-        if login_message.status_code == 200:
-            with connsqlit3() as cursor:
-                cursor.execute("delete from login_auth")
-                cursor.execute('insert into login_auth(id, userauth) values (1, "%s")'%userauth["userauth"])
-        else:
-            self.eooer_show.text = userauth["userauth"]
+                self.parent.parent.parent.userauth = userauth["userauth"]
+                self.parent.parent.parent.username = username
+                self.parent.parent.parent.current = "Index"
+                # print(123)
+            else:
+                self.eooer_show.text = userauth["userauth"]
+        except Exception as e:
+            self.eooer_show.text = "无法连接服务器"
+
+
 
 
 
