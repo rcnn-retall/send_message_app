@@ -1,5 +1,6 @@
 import socket
 from userinfo.login import Login_View
+from io_message import io_massage
 from utils.route_list import route
 from utils.response import response,eooer_response
 import json
@@ -15,9 +16,6 @@ route_i ={}
 for view_name, view in route.items():
     route_i[view_name] = view()
 
-
-
-print(route_i)
 class Send_Message_Server(socket.socket):
     def __init__(self, family=-1, type=-1, proto=-1, fileno=None, host=None, port=None, count=None):
         super(Send_Message_Server, self).__init__(family=family, type=type, proto=proto, fileno=fileno)
@@ -38,7 +36,7 @@ class Send_Message_Server(socket.socket):
         data = pud_i[-1]
 
         print(pud_i)
-        # print(method,path,data)
+
         if path in route_i:
             try:
                 getattr(route_i[path], method)(conn, data)
@@ -53,5 +51,5 @@ class Send_Message_Server(socket.socket):
             conn.close()
 
 
-server = Send_Message_Server(socket.AF_INET, socket.SOCK_STREAM, host='127.0.0.1', port=9020, count=5)
+server = Send_Message_Server(socket.AF_INET, socket.SOCK_STREAM, host='192.168.1.10', port=9020, count=188)
 server.run()

@@ -69,3 +69,23 @@
    + 响应体：
      + code:状态码
      + message:返回信息
+
+3. 接收信息接口
+
+   + 请求方式：GET/POST
+
+   + 请求行：io_message
+   + 请求体(POST):
+     + userauth:验证字段串
+     + s_username:发送用户名
+     + d_username:接收用户名
+     + massage:信息
+   + 请求体（GET)
+     + username:消息列表的用户名
+     + userauth:验证字段串
+   + 服务器存储redis
+   + 客户端存储sqlit3
+   + 响应数据（json)
+     + 验证失效：{conde:500, "massage":101}
+     + POST:{conde:200, "message":200}
+     + GET:{conde:200, "message":[json,json]}

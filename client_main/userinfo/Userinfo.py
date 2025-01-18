@@ -1,5 +1,4 @@
 from kivy.uix.screenmanager import Screen, ScreenManager, NoTransition
-from pandas.core.interchange.from_dataframe import primitive_column_to_ndarray
 from utils.uix import U_button, U_clear_color_Button,U_label,U_input_text,Get_Route_View
 from utils.data import connsqlit3
 from kivy.uix.label import Label
